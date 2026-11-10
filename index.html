@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8f6ef">
+<meta name="description" content="Gleichmäßig beschleunigte Bewegung verstehen und mit zwölf interaktiven Sachaufgaben für die Einführungsphase üben.">
+<title>Bewegungslabor · Physik EF</title>
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #17302b;
+    --text: #40534d;
+    --muted: #52645c;
+    --paper: #f8f6ef;
+    --white: #fffefb;
+    --line: #dce2d8;
+    --green: #23483e;
+    --mint: #e8f0e8;
+    --orange: #f5a563;
+    --rust: #a34921;
+    --peach: #fce9d7;
+    font-family: "Avenir Next", Avenir, system-ui, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    font-synthesis: none;
+    scroll-behavior: smooth;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-size: 16px; line-height: 1.55; }
+  h1, h2, h3, p, figure { margin: 0; }
+  a { color: inherit; }
+  button, input { font: inherit; }
+  button, summary { cursor: pointer; }
+  :focus-visible { outline: 3px solid #a34921; outline-offset: 4px; }
+  [hidden] { display: none !important; }
+  .wrap { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
+  .skip { position: fixed; top: 8px; left: 8px; z-index: 3; padding: 10px 14px; background: var(--white); transform: translateY(-150%); }
+  .skip:focus { transform: translateY(0); }
+  .icon { width: 20px; height: 20px; flex: none; vertical-align: middle; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .top { border-bottom: 1px solid #e6e4da; }
+  .top .wrap { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+  .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 1.035rem; font-weight: 800; letter-spacing: -.025em; text-decoration: none; }
+  .brand-icon { display: grid; place-items: center; width: 35px; height: 35px; background: var(--green); color: #ffb77d; border-radius: 9px; }
+  .brand-icon .icon { width: 21px; height: 21px; }
+  nav { display: flex; gap: 26px; align-items: center; }
+  nav a { color: var(--text); font-size: .9rem; font-weight: 650; text-decoration: none; padding-block: 8px; }
+  nav a:hover { color: var(--rust); }
+  nav a:last-child { display: flex; align-items: center; gap: 7px; }
+  nav .icon { width: 15px; height: 15px; }
+  .hero { padding: 64px 0 70px; }
+  .hero-grid { display: grid; grid-template-columns: 1.03fr 1fr; gap: 54px; align-items: center; }
+  .eyebrow { display: flex; align-items: center; gap: 9px; font-weight: 800; font-size: .73rem; letter-spacing: .14em; line-height: 1.35; text-transform: uppercase; color: var(--rust); }
+  .hero .eyebrow { width: fit-content; padding: 7px 11px; border-radius: 6px; background: var(--peach); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  h1 { font-size: clamp(3rem, 6.2vw, 5.35rem); font-weight: 700; letter-spacing: -.056em; line-height: .99; margin: 17px 0 19px; }
+  .accent { color: #bd562d; }
+  .lead { max-width: 475px; color: var(--text); font-size: 1.08rem; line-height: 1.6; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 20px; margin-top: 25px; }
+  .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 46px; padding: 10px 16px; border: 1px solid var(--green); border-radius: 8px; background: var(--green); color: white; text-decoration: none; font-weight: 740; line-height: 1.2; }
+  .button:hover { background: #336252; border-color: #336252; }
+  .button .icon { width: 17px; height: 17px; }
+  .button.secondary { color: var(--green); background: var(--white); border-color: #c9d6cb; }
+  .button.secondary:hover { background: var(--mint); border-color: var(--green); }
+  .quick { color: var(--muted); font-weight: 650; font-size: .81rem; }
+  .plot { overflow: hidden; border-radius: 15px; background: #19382f; color: #f8f6e9; box-shadow: 0 15px 28px #17302b16; }
+  .plot-head, .plot figcaption { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-inline: 22px; }
+  .plot-head { padding-top: 19px; font-size: .71rem; font-weight: 750; letter-spacing: .115em; text-transform: uppercase; }
+  .plot-badge { display: inline-flex; align-items: center; gap: 7px; color: #ffd0a6; padding: 5px 8px; border: 1px solid #7b7052; border-radius: 4px; font-size: .7rem; letter-spacing: .035em; text-transform: none; white-space: nowrap; }
+  .plot svg.diagram { display: block; width: 100%; height: auto; }
+  .plot figcaption { min-height: 44px; border-top: 1px solid #446156; font-size: .75rem; color: #d8e4d7; }
+  .plot-key { display: inline-flex; align-items: center; gap: 8px; }
+  .plot-key::before { content: ""; width: 13px; height: 2px; background: var(--orange); }
+  .plot figcaption span:last-child { font-variant-numeric: tabular-nums; }
+  .section { padding-block: 57px 65px; scroll-margin-top: 12px; }
+  .theory { background: var(--white); border-block: 1px solid #e4e7de; }
+  h2 { font-size: clamp(2rem, 4.2vw, 3.1rem); line-height: 1.08; font-weight: 700; letter-spacing: -.045em; margin-top: 10px; }
+  .section-intro { color: var(--text); margin-top: 12px; max-width: 700px; }
+  .cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; margin-top: 26px; }
+  .formula-card { border: 1px solid var(--line); border-radius: 11px; padding: 18px 20px 17px; background: #fbfcf8; min-width: 0; container-type: inline-size; }
+  .formula-card h3 { display: flex; align-items: center; gap: 9px; font-size: .91rem; font-weight: 780; }
+  .formula-card .icon { color: #397463; }
+  .formula { font-family: Georgia, "Times New Roman", serif; font-size: clamp(1rem, 8.6cqi, 1.9rem); line-height: 1.3; margin: 10px 0 8px; font-weight: 400; }
+  sub, sup { line-height: 0; }
+  .formula-card p:last-child { color: var(--text); font-size: .88rem; }
+  .theory-detail { margin-top: 16px; border: 1px solid #d4e2d6; border-radius: 10px; background: var(--mint); }
+  summary { font-weight: 760; }
+  .theory-detail summary { padding: 14px 18px; }
+  .theory-inner { padding: 0 18px 17px; color: var(--text); }
+  .theory-inner ul { margin-block: 0 10px; padding-left: 22px; }
+  .theory-inner li + li { margin-top: 5px; }
+  .unit-note { margin-top: 16px; display: flex; gap: 9px; align-items: flex-start; color: var(--text); font-size: .91rem; }
+  .unit-note .icon { color: var(--rust); margin-top: 2px; }
+  .practice { background: #f1f3eb; }
+  .practice-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; }
+  .overall { min-width: 155px; color: var(--text); font-size: .81rem; font-weight: 700; }
+  .bar { height: 7px; border-radius: 9px; overflow: hidden; background: #dce4d9; margin-top: 8px; }
+  .bar span { display: block; height: 100%; width: 0; background: #397463; transition: width .2s ease; }
+  .practice-grid { display: grid; grid-template-columns: minmax(218px, .75fr) minmax(0, 2.3fr); gap: 18px; align-items: start; margin-top: 25px; }
+  .levels { display: grid; gap: 8px; }
+  .level { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 9px; width: 100%; padding: 10px; text-align: left; border: 1px solid var(--line); border-radius: 9px; background: var(--white); color: var(--ink); }
+  .level:hover { border-color: #638d7d; }
+  .level[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: white; }
+  .level-number { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 6px; background: #e9efe7; color: var(--green); font-weight: 800; font-size: .82rem; }
+  .level[aria-pressed="true"] .level-number { background: #46685e; color: #fff2e4; }
+  .level-name { display: block; font-size: .87rem; font-weight: 780; line-height: 1.18; }
+  .level-count { color: var(--muted); font-size: .74rem; }
+  .level[aria-pressed="true"] .level-count { color: #d5e5dc; }
+  .exercise { min-width: 0; background: var(--white); border: 1px solid var(--line); border-radius: 12px; padding: 23px 25px; box-shadow: 0 8px 22px #17302b08; }
+  .exercise-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+  .exercise-top .eyebrow { color: var(--muted); }
+  .tasks { display: flex; flex-wrap: wrap; gap: 6px; }
+  .task-tab { min-width: 35px; height: 35px; padding: 0 6px; border: 1px solid var(--line); border-radius: 6px; background: white; color: var(--green); font-size: .8rem; font-weight: 760; }
+  .task-tab:hover { border-color: var(--green); }
+  .task-tab[aria-current="step"] { border-color: #a34921; background: var(--peach); color: #873710; }
+  .task-tab.done:not([aria-current]) { background: var(--mint); border-color: #bbd3c3; }
+  .exercise h3 { margin-top: 12px; font-size: clamp(1.47rem, 3vw, 2.05rem); line-height: 1.15; letter-spacing: -.035em; font-weight: 700; }
+  .exercise-main { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-areas: "copy visual" "answer visual"; gap: 17px 21px; align-items: start; align-content: start; margin-top: 14px; }
+  .task-copy { grid-area: copy; }
+  .task-visual { grid-area: visual; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: #edf1e9; }
+  .task-art { position: relative; overflow: hidden; aspect-ratio: 2; }
+  .task-art img { position: absolute; display: block; width: 100%; height: 300%; inset: 0 auto auto 0; }
+  .task-art img[data-panel="1"] { transform: translateY(-33.333333%); }
+  .task-art img[data-panel="2"] { transform: translateY(-66.666667%); }
+  .task-visual figcaption { padding: 6px 10px; color: var(--muted); font-size: .72rem; }
+  .motion { border-top: 1px solid #cedace; padding: 8px 10px 9px; }
+  .motion-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0 7px; }
+  .motion-heading strong { font-size: .73rem; }
+  .motion-play { min-height: 34px; padding: 1px 0; border: 0; background: transparent; color: var(--green); font-size: .75rem; font-weight: 740; }
+  .motion-play:hover { text-decoration: underline; }
+  .motion-play .icon { width: 13px; height: 13px; }
+  .motion svg.track { display: block; width: 100%; height: 29px; }
+  .motion-caption { font-size: .73rem; line-height: 1.4; color: var(--text); }
+  .scenario { color: var(--text); }
+  .question { margin-top: 9px; font-weight: 760; }
+  .answer { grid-area: answer; }
+  .answer label { display: block; font-size: .83rem; font-weight: 770; margin-bottom: 5px; }
+  .answer-row { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
+  .field { display: flex; align-items: center; max-width: 100%; width: 190px; border: 1px solid #bdcbc0; border-radius: 8px; background: white; }
+  .field:focus-within { outline: 2px solid #a34921; outline-offset: 2px; }
+  .field input { min-width: 0; width: 100%; padding: 9px 9px 9px 12px; border: none; background: transparent; outline: none; border-radius: 8px; color: var(--ink); }
+  .field span { white-space: nowrap; color: var(--text); font-weight: 700; font-size: .84rem; padding-right: 11px; }
+  .rounding { color: var(--muted); margin-top: 6px; font-size: .79rem; }
+  .feedback { margin-top: 12px; padding: 9px 12px; border-radius: 7px; background: var(--peach); color: #79340f; font-size: .89rem; font-weight: 670; }
+  .feedback:empty { display: none; }
+  .feedback.correct { background: var(--mint); color: #214b3b; }
+  .support { display: grid; gap: 7px; margin-top: 17px; }
+  .support details { border: 1px solid var(--line); border-radius: 8px; background: #fbfcf8; }
+  .support summary { padding: 8px 11px; color: var(--green); font-size: .87rem; }
+  .support details p, .support ol { margin: 0; padding: 0 11px 11px; color: var(--text); font-size: .91rem; }
+  .support ol { padding-left: 31px; }
+  .support li + li { margin-top: 5px; }
+  .support .solution-box { background: #f1f6ef; border-color: #cfdfd0; }
+  .solution-box[open] summary { border-bottom: 1px solid #d7e3d6; }
+  .solution-box summary .icon { width: 16px; height: 16px; margin-right: 3px; }
+  .solution-body { padding: 12px 12px 11px; }
+  .solution-data { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 8px; margin: 0 0 11px; }
+  .solution-data div { min-width: 0; border-radius: 6px; padding: 6px 9px; background: var(--white); }
+  .solution-data dt { font-size: .72rem; font-weight: 800; color: var(--green); }
+  .solution-data dd { font-size: .87rem; color: var(--text); margin: 2px 0 0; }
+  .support .solution-body ol { padding: 0 0 0 19px; }
+  .support .solution-result { padding: 7px 9px; margin-top: 10px; border-radius: 6px; background: #dfebdf; color: var(--ink); font-weight: 700; }
+  .exercise-nav { display: flex; justify-content: space-between; align-items: center; gap: 8px; border-top: 1px solid var(--line); margin-top: 18px; padding-top: 12px; }
+  .text-button { background: transparent; border: 0; color: var(--green); border-radius: 4px; min-height: 40px; font-size: .87rem; font-weight: 770; padding: 6px 2px; }
+  .text-button:hover:not(:disabled) { text-decoration: underline; }
+  .text-button:disabled { color: #647269; opacity: .78; cursor: default; }
+  .text-button .icon { width: 16px; height: 16px; }
+  .footer { border-top: 1px solid #e0e4d9; padding-block: 21px; }
+  .footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: .83rem; }
+  .footer strong { color: var(--ink); }
+  @media (max-width: 880px) {
+    .hero-grid { gap: 26px; }
+    .hero { padding-block: 48px 52px; }
+    .formula-card { padding-inline: 14px; }
+  }
+  @media (max-width: 900px) {
+    .exercise-main { grid-template-columns: 1fr; grid-template-areas: "visual" "copy" "answer"; }
+  }
+  @media (max-width: 760px) {
+    .cards { grid-template-columns: 1fr; gap: 9px; margin-top: 20px; }
+    .formula-card { padding: 13px 15px; }
+  }
+  @media (max-width: 680px) {
+    .wrap { width: calc(100% - 32px); }
+    .top .wrap { min-height: 61px; gap: 12px; }
+    nav { gap: 12px; }
+    nav a { font-size: .83rem; }
+    nav .icon { display: none; }
+    .hero { padding-block: 34px 38px; }
+    .hero-grid, .practice-grid { grid-template-columns: 1fr; }
+    .hero-grid { gap: 26px; }
+    h1 { font-size: clamp(2.75rem, 10.5vw, 4.2rem); }
+    .lead { font-size: 1rem; }
+    .section { padding-block: 38px 42px; }
+    .practice-head { flex-wrap: wrap; }
+    .overall { width: 100%; }
+    .levels { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .level { grid-template-columns: 28px minmax(0, 1fr); gap: 6px; padding: 8px; }
+    .level-number { width: 28px; height: 28px; grid-row: span 2; }
+    .level-count { grid-column: 2; line-height: 1.1; }
+    .exercise { padding: 16px; }
+    .plot-head, .plot figcaption { padding-inline: 14px; }
+  }
+  @media (max-width: 360px) {
+    .brand { font-size: .87rem; gap: 6px; }
+    nav { gap: 8px; }
+    .answer-row .button { width: 100%; }
+    .field { width: 100%; }
+    .solution-data { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+  }
+</style>
+</head>
+<body id="oben">
+<svg aria-hidden="true" width="0" height="0" style="position:absolute">
+  <symbol id="icon-track" viewBox="0 0 24 24"><path d="M3 18h18M5 15c4.5 0 7-2.5 8.7-5.3L17 4m-4 0h4v4"/></symbol>
+  <symbol id="icon-right" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="icon-left" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
+  <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11s-8-6-8-11a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="icon-speed" viewBox="0 0 24 24"><path d="M4 18a9 9 0 1 1 16 0H4Zm8-3 4-5M6.5 13l1 .5M12 8v1m5.5 4.5 1-.5"/></symbol>
+  <symbol id="icon-accel" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 7-9m-6 0h6v6"/></symbol>
+  <symbol id="icon-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="icon-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
+  <symbol id="icon-notes" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6V3Zm8 0v5h4M9 12h6m-6 4h6"/></symbol>
+</svg>
+<a class="skip" href="#haupt">Zum Inhalt</a>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#oben"><span class="brand-icon"><svg class="icon" aria-hidden="true"><use href="#icon-track"/></svg></span>Bewegungslabor</a>
+    <nav aria-label="Hauptnavigation">
+      <a href="#theorie">Theorie</a>
+      <a href="#aufgaben">Aufgaben <svg class="icon" aria-hidden="true"><use href="#icon-right"/></svg></a>
+    </nav>
+  </div>
+</header>
+<main id="haupt">
+  <section class="hero" aria-labelledby="titel">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><span class="dot"></span> Physik EF · Kinematik</p>
+        <h1 id="titel">Bewegung<br>berechnen<span class="accent">.</span></h1>
+        <p class="lead">Wie weit rollt ein Zug beim Anfahren? Wie lang ist der Bremsweg eines Autos? Übe, gleichmäßig beschleunigte Bewegungen zu berechnen.</p>
+        <div class="hero-actions">
+          <a class="button" href="#theorie">Mit der Theorie starten <svg class="icon" aria-hidden="true"><use href="#icon-right"/></svg></a>
+          <span class="quick">12 Aufgaben · 4 Stufen</span>
+        </div>
+      </div>
+      <figure class="plot">
+        <div class="plot-head"><span>Weg-Zeit-Diagramm</span><span class="plot-badge"><span class="dot"></span> a = 2 m/s²</span></div>
+        <svg class="diagram" viewBox="0 0 510 251" role="img" aria-labelledby="plot-title plot-desc">
+          <title id="plot-title">Weg-Zeit-Diagramm für einen Start aus dem Stand</title>
+          <desc id="plot-desc">Bei zwei Metern pro Sekunde zum Quadrat legt der Wagen in einer Sekunde einen Meter, in zwei Sekunden vier Meter, in drei Sekunden neun Meter und in vier Sekunden sechzehn Meter zurück.</desc>
+          <defs>
+            <linearGradient id="under-curve" x1="0" x2="0" y1="0" y2="1" gradientUnits="objectBoundingBox">
+              <stop offset="0" stop-color="#f5a563" stop-opacity=".3"/>
+              <stop offset="1" stop-color="#f5a563" stop-opacity=".03"/>
+            </linearGradient>
+          </defs>
+          <path d="M62 37H460M62 78H460M62 119H460M62 160H460M151 37V201M240 37V201M329 37V201M418 37V201" fill="none" stroke="#45665a" stroke-width="1" stroke-dasharray="3 4"/>
+          <path d="M62 201Q240 201 418 37V201Z" fill="url(#under-curve)"/>
+          <path d="M62 27v174h399m-5-4 5 4-5 4M58 32l4-5 4 5" fill="none" stroke="#b6cdbf" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M62 201Q240 201 418 37" fill="none" stroke="#ffb578" stroke-width="3.5" stroke-linecap="round"/>
+          <g fill="#ffb578" stroke="#19382f" stroke-width="2">
+            <circle cx="62" cy="201" r="4.8"/><circle cx="151" cy="190.75" r="4.8"/><circle cx="240" cy="160" r="4.8"/><circle cx="329" cy="108.75" r="4.8"/><circle cx="418" cy="37" r="5.6"/>
+          </g>
+          <g fill="#d2e3d6" font-family="system-ui, sans-serif" font-size="13">
+            <text x="24" y="22">s (m)</text><text x="464" y="224">t (s)</text>
+            <text x="45" y="205">0</text><text x="45" y="164">4</text><text x="45" y="123">8</text><text x="38" y="82">12</text><text x="38" y="41">16</text>
+            <text x="147" y="224">1</text><text x="236" y="224">2</text><text x="325" y="224">3</text><text x="414" y="224">4</text>
+          </g>
+          <g transform="translate(281 59)">
+            <path d="M2 23h15M6 17h8M10 29h9" stroke="#d2e3d6" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M24 22v-5c0-2 3-4 7-5l6-8h19l9 8 8 2c3 1 4 4 4 8v4H24Z" fill="#ffb578" stroke="#19382f" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="m38 7-4 6h13V7Zm12 0v6h12l-6-6Z" fill="#325c50"/>
+            <path d="M72 18h4" stroke="#fff0cf" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="36" cy="26" r="5.8" fill="#19382f" stroke="#ffb578" stroke-width="1.6"/>
+            <circle cx="65" cy="26" r="5.8" fill="#19382f" stroke="#ffb578" stroke-width="1.6"/>
+          </g>
+        </svg>
+        <figcaption><span class="plot-key">Weg ab dem Start</span><span>v₀ = 0 m/s</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="theorie" class="section theory" aria-labelledby="theorie-titel">
+    <div class="wrap">
+      <p class="eyebrow">01 · Theorie</p>
+      <h2 id="theorie-titel">Drei Gleichungen für die Bewegung</h2>
+      <p class="section-intro">Wir betrachten eine geradlinige Bewegung mit konstanter Beschleunigung. Die Zeit <var>t</var> messen wir ab dem Moment, den wir als Beginn wählen.</p>
+      <div class="cards">
+        <article class="formula-card">
+          <h3><svg class="icon" aria-hidden="true"><use href="#icon-pin"/></svg> Ort</h3>
+          <p class="formula" aria-label="x von t ist gleich ein Halb mal a mal t Quadrat plus v null mal t plus x null"><var>x</var>(<var>t</var>) = ½<var>at</var><sup>2</sup> + <var>v</var><sub>0</sub><var>t</var> + <var>x</var><sub>0</sub></p>
+          <p><var>x</var><sub>0</sub> ist der Startort. Die Verschiebung ab dem Start ist <var>s</var> = <var>x</var> − <var>x</var><sub>0</sub>.</p>
+        </article>
+        <article class="formula-card">
+          <h3><svg class="icon" aria-hidden="true"><use href="#icon-speed"/></svg> Geschwindigkeit</h3>
+          <p class="formula"><var>v</var>(<var>t</var>) = <var>at</var> + <var>v</var><sub>0</sub></p>
+          <p><var>v</var><sub>0</sub> ist die Anfangsgeschwindigkeit. In der Zeit <var>t</var> ändert sich <var>v</var> um <var>at</var>.</p>
+        </article>
+        <article class="formula-card">
+          <h3><svg class="icon" aria-hidden="true"><use href="#icon-accel"/></svg> Beschleunigung</h3>
+          <p class="formula"><var>a</var> = konstant</p>
+          <p>In gleich langen Zeiten ändert sich <var>v</var> um denselben Betrag. Beim Bremsen in positiver Fahrtrichtung gilt <var>a</var> &lt; 0.</p>
+        </article>
+      </div>
+      <details class="theory-detail" open>
+        <summary>Wann fallen Terme weg?</summary>
+        <div class="theory-inner">
+          <ul>
+            <li><strong>Startort als Nullpunkt.</strong> Wählst du <var>x</var><sub>0</sub> = 0, gilt <var>x</var> = <var>s</var>. Für die Verschiebung <var>s</var> fällt <var>x</var><sub>0</sub> auch bei einem anderen Nullpunkt durch die Differenz weg.</li>
+            <li><strong>Start aus dem Stand.</strong> Bei <var>v</var><sub>0</sub> = 0 bleibt <var>v</var> = <var>at</var> und <var>s</var> = ½<var>at</var><sup>2</sup>.</li>
+            <li><strong>Bremsen aus der Fahrt.</strong> Zu Beginn ist <var>v</var><sub>0</sub> &gt; 0. In <var>v</var> und <var>s</var> bleibt der Term mit <var>v</var><sub>0</sub> erhalten. Bei vollständigem Stillstand setzt du erst am Ende <var>v</var> = 0.</li>
+          </ul>
+          <p>In den Aufgaben bleibt die Fahrtrichtung bis zum betrachteten Zeitpunkt gleich. Daher entspricht <var>s</var> in positiver Fahrtrichtung der zurückgelegten Strecke.</p>
+        </div>
+      </details>
+      <p class="unit-note"><svg class="icon" aria-hidden="true"><use href="#icon-info"/></svg><span><strong>Einheiten</strong> · Rechne mit m, s, m/s und m/s². Teile einen Wert in km/h durch 3,6, um ihn in m/s umzurechnen.</span></p>
+    </div>
+  </section>
+
+  <section id="aufgaben" class="section practice" aria-labelledby="aufgaben-titel">
+    <div class="wrap">
+      <div class="practice-head">
+        <div>
+          <p class="eyebrow">02 · Übung</p>
+          <h2 id="aufgaben-titel">Jetzt rechnest du.</h2>
+          <p class="section-intro">Wähle eine Stufe. Zu jeder Aufgabe gibt es einen Tipp und eine ausklappbare Musterlösung.</p>
+        </div>
+        <div class="overall">
+          <span id="progress-text">0 von 12 gelöst</span>
+          <div class="bar" role="progressbar" aria-label="Gelöste Aufgaben" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0"><span></span></div>
+        </div>
+      </div>
+      <div class="practice-grid">
+        <div id="levels" class="levels" role="group" aria-label="Schwierigkeitsstufe wählen"></div>
+        <article class="exercise" aria-labelledby="task-title">
+          <div class="exercise-top">
+            <p class="eyebrow" id="task-label"></p>
+            <div id="tasks" class="tasks" role="group" aria-label="Aufgabe innerhalb der Stufe wählen"></div>
+          </div>
+          <h3 id="task-title" tabindex="-1"></h3>
+          <div class="exercise-main">
+            <div class="task-visual">
+              <figure>
+                <div class="task-art"><img id="task-image" alt="" decoding="async"></div>
+                <figcaption>Illustration zur Aufgabe</figcaption>
+              </figure>
+              <div class="motion" id="motion" hidden>
+                <div class="motion-heading">
+                  <strong>Bewegung im Modell</strong>
+                  <button type="button" class="motion-play" id="motion-play">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-play"/></svg> <span>Abspielen</span>
+                  </button>
+                </div>
+                <svg class="track" viewBox="0 0 280 35" aria-hidden="true">
+                  <path d="M16 23h248" stroke="#9bb0a0" stroke-width="1.5" stroke-linecap="round"/>
+                  <g id="motion-markers" fill="#58776a"></g>
+                  <g id="motion-vehicle" fill="#a34921">
+                    <path d="M-10 14v-3l4-2 3-5h8l4 5 3 2v3Z"/>
+                    <circle cx="-6" cy="15" r="2.4"/><circle cx="8" cy="15" r="2.4"/>
+                  </g>
+                </svg>
+                <p class="motion-caption" id="motion-caption"></p>
+              </div>
+            </div>
+            <div class="task-copy">
+              <p class="scenario" id="scenario"></p>
+              <p class="question" id="question"></p>
+            </div>
+            <form id="answer-form" class="answer" novalidate>
+              <label for="answer">Dein Ergebnis</label>
+              <div class="answer-row">
+                <div class="field"><input id="answer" type="text" inputmode="text" autocomplete="off" spellcheck="false" aria-describedby="answer-unit rounding" placeholder="Zahl eingeben"><span id="answer-unit"></span></div>
+                <button type="submit" class="button"><svg class="icon" aria-hidden="true"><use href="#icon-check"/></svg> Prüfen</button>
+              </div>
+              <p id="rounding" class="rounding">Runde bei Bedarf erst am Ende auf zwei Nachkommastellen.</p>
+              <p id="feedback" class="feedback" role="status"></p>
+            </form>
+          </div>
+          <div class="support">
+            <details id="hint-box"><summary>Tipp</summary><p id="hint"></p></details>
+            <details class="solution-box" id="solution-box">
+              <summary><svg class="icon" aria-hidden="true"><use href="#icon-notes"/></svg> Musterlösung</summary>
+              <div class="solution-body">
+                <dl class="solution-data">
+                  <div><dt>Gegeben</dt><dd id="solution-given"></dd></div>
+                  <div><dt>Gesucht</dt><dd id="solution-target"></dd></div>
+                </dl>
+                <ol id="solution"></ol>
+                <p class="solution-result" id="solution-result"></p>
+              </div>
+            </details>
+          </div>
+          <div class="exercise-nav">
+            <button type="button" class="text-button" id="previous"><svg class="icon" aria-hidden="true"><use href="#icon-left"/></svg> <span>Zurück</span></button>
+            <button type="button" class="text-button" id="next"><span>Weiter</span> <svg class="icon" aria-hidden="true"><use href="#icon-right"/></svg></button>
+          </div>
+        </article>
+      </div>
+      <noscript><p>Aktiviere JavaScript, um die Aufgaben zu bearbeiten.</p></noscript>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="wrap"><span><strong>Bewegungslabor</strong> · Physik EF</span><span>Der Lernfortschritt wird in diesem Browser gespeichert.</span></div>
+</footer>
+<script>
+  const levels = [
+    {
+      name: "Direkt einsetzen",
+      artwork: "direkt-einsetzen.webp",
+      tasks: [
+        {
+          title: "Der Roller fährt an",
+          imageAlt: "Ein E-Roller mit Fahrer auf einem Weg im Grünen.",
+          motion: "start",
+          scenario: "Ein E-Roller startet aus dem Stand und beschleunigt gleichmäßig mit 1,5 m/s². Er fährt 6 s lang so weiter.",
+          question: "Wie schnell ist der Roller nach 6 s?",
+          unit: "m/s", expected: 9,
+          given: "v₀ = 0 m/s, a = 1,5 m/s², t = 6 s",
+          target: "Geschwindigkeit v",
+          conclusion: "Der Roller ist nach 6 s 9 m/s schnell.",
+          hint: "„Aus dem Stand“ bedeutet v₀ = 0. Welche Gleichung liefert v aus a und t?",
+          solution: [
+            "Setze v₀ = 0 in v = at + v₀ ein. Damit gilt v = at.",
+            "v = 1,5 m/s² · 6 s = 9 m/s."
+          ]
+        },
+        {
+          title: "Die Bahn verlässt den Bahnhof",
+          imageAlt: "Eine S-Bahn fährt am Bahnsteig entlang.",
+          scenario: "Eine S-Bahn steht am Bahnsteig. Beim Anfahren beschleunigt sie 8 s lang gleichmäßig mit 0,75 m/s².",
+          question: "Welche Strecke legt sie in diesen 8 s zurück?",
+          unit: "m", expected: 24,
+          given: "v₀ = 0 m/s, a = 0,75 m/s², t = 8 s",
+          target: "Strecke s",
+          conclusion: "Die S-Bahn legt in den ersten 8 s 24 m zurück.",
+          hint: "Wähle den Startpunkt als Nullpunkt. Da die Bahn zunächst steht, genügt s = ½at².",
+          solution: [
+            "Die Bahn startet mit v₀ = 0. Für die Strecke ab dem Start gilt s = ½at².",
+            "s = ½ · 0,75 m/s² · (8 s)² = 24 m."
+          ]
+        },
+        {
+          title: "Der Gokart-Test",
+          imageAlt: "Ein orangefarbenes Gokart auf einer Teststrecke.",
+          scenario: "Ein E-Gokart startet aus dem Stand und beschleunigt 5 s lang gleichmäßig mit 2,4 m/s². Die Anzeige gibt die Geschwindigkeit in km/h an.",
+          question: "Was zeigt die Anzeige nach 5 s?",
+          unit: "km/h", expected: 43.2,
+          given: "v₀ = 0 m/s, a = 2,4 m/s², t = 5 s",
+          target: "Geschwindigkeit v in km/h",
+          conclusion: "Die Anzeige zeigt nach 5 s 43,2 km/h.",
+          hint: "Berechne zuerst v = at in m/s. Für km/h multiplizierst du anschließend mit 3,6.",
+          solution: [
+            "v = at = 2,4 m/s² · 5 s = 12 m/s.",
+            "12 m/s entsprechen 12 · 3,6 km/h = 43,2 km/h."
+          ]
+        }
+      ]
+    },
+    {
+      name: "Formeln umstellen",
+      artwork: "formeln-umstellen.webp",
+      tasks: [
+        {
+          title: "Mit dem Rad auf Tempo",
+          imageAlt: "Eine Radfahrerin mit Helm auf einem Weg am Fluss.",
+          scenario: "Eine Radfahrerin fährt aus dem Stand los und beschleunigt gleichmäßig mit 0,8 m/s². Sie möchte 6 m/s erreichen.",
+          question: "Wie lange braucht sie dafür?",
+          unit: "s", expected: 7.5,
+          given: "v₀ = 0 m/s, a = 0,8 m/s², v = 6 m/s",
+          target: "Zeit t",
+          conclusion: "Die Radfahrerin erreicht 6 m/s nach 7,5 s.",
+          hint: "Beginne mit v = at. Teile beide Seiten durch a, um t zu isolieren.",
+          solution: [
+            "v = at. Teile durch a und erhalte t = v/a.",
+            "t = (6 m/s) / (0,8 m/s²) = 7,5 s."
+          ]
+        },
+        {
+          title: "Schlitten am Messpunkt",
+          imageAlt: "Ein Schlitten nähert sich einer orangefarbenen Markierung im Schnee.",
+          scenario: "Ein Schlitten startet aus dem Stand und beschleunigt gleichmäßig mit 1,2 m/s². Der erste Messpunkt liegt 15 m vom Start entfernt.",
+          question: "Nach welcher Zeit erreicht der Schlitten den Messpunkt?",
+          unit: "s", expected: 5,
+          given: "v₀ = 0 m/s, a = 1,2 m/s², s = 15 m",
+          target: "Zeit t",
+          conclusion: "Der Schlitten erreicht den Messpunkt nach 5 s.",
+          hint: "Stelle s = ½at² erst nach t² um. Ziehe dann die Wurzel.",
+          solution: [
+            "s = ½at². Multipliziere mit 2 und teile durch a. Damit gilt t² = 2s/a.",
+            "t = √(2s/a) = √(30 m / (1,2 m/s²)) = 5 s. Die gesuchte Zeit seit dem Start ist positiv."
+          ]
+        },
+        {
+          title: "Der Roboter auf der Teststrecke",
+          imageAlt: "Ein kleiner vierrädriger Roboter auf einer Messstrecke im Labor.",
+          scenario: "Ein Roboter startet aus dem Stand. Er beschleunigt gleichmäßig und legt in den ersten 4 s genau 10 m zurück.",
+          question: "Wie groß ist seine Beschleunigung?",
+          unit: "m/s²", expected: 1.25,
+          given: "v₀ = 0 m/s, t = 4 s, s = 10 m",
+          target: "Beschleunigung a",
+          conclusion: "Der Roboter beschleunigt mit 1,25 m/s².",
+          hint: "Multipliziere beide Seiten von s = ½at² mit 2 und teile dann durch t².",
+          solution: [
+            "Aus s = ½at² folgt 2s = at² und dann a = 2s/t².",
+            "a = (2 · 10 m) / (4 s)² = 1,25 m/s²."
+          ]
+        }
+      ]
+    },
+    {
+      name: "Mit Anfangstempo",
+      artwork: "mit-anfangstempo.webp",
+      tasks: [
+        {
+          title: "Das Auto kommt zum Stehen",
+          imageAlt: "Ein Auto mit leuchtenden Bremslichtern auf einer geraden Straße.",
+          motion: "brake",
+          scenario: "Ein Auto fährt 72 km/h. Ab Bremsbeginn verzögert es gleichmäßig mit a = −5 m/s² bis zum Stillstand.",
+          question: "Wie lang ist der reine Bremsweg ab Bremsbeginn?",
+          unit: "m", expected: 40,
+          given: "v₀ = 72 km/h, a = −5 m/s², v = 0 m/s",
+          target: "Bremsweg s",
+          conclusion: "Der reine Bremsweg beträgt 40 m.",
+          hint: "Rechne 72 km/h in m/s um. Ermittle aus v = 0 zuerst die Bremszeit und setze sie in s = v₀t + ½at² ein.",
+          solution: [
+            "v₀ = 72/3,6 m/s = 20 m/s. Beim Stillstand gilt v = 0.",
+            "t = (v − v₀)/a = (0 − 20 m/s) / (−5 m/s²) = 4 s.",
+            "s = 20 m/s · 4 s + ½ · (−5 m/s²) · (4 s)² = 40 m."
+          ]
+        },
+        {
+          title: "Abbremsen auf 10 km/h",
+          imageAlt: "Ein Auto fährt auf eine durch zwei Barrieren verengte Straße zu.",
+          scenario: "Ein Auto fährt mit 54 km/h auf eine Engstelle zu. Es bremst gleichmäßig mit a = −2,5 m/s², bis es nur noch 10 km/h schnell ist.",
+          question: "Wie viel Strecke legt das Auto während dieser Bremsung zurück?",
+          unit: "m", expected: (15 ** 2 - (10 / 3.6) ** 2) / 5,
+          given: "v₀ = 54 km/h, v = 10 km/h, a = −2,5 m/s²",
+          target: "Strecke s beim Bremsen",
+          conclusion: "Bis auf 10 km/h legt das Auto beim Bremsen rund 43,46 m zurück.",
+          hint: "Wandle beide Geschwindigkeiten um. Die Bremszeit ergibt sich aus der Geschwindigkeitsänderung. Verwende sie ungerundet für die Strecke.",
+          solution: [
+            "v₀ = 54/3,6 m/s = 15 m/s. Die Zielgeschwindigkeit ist v = 10/3,6 m/s.",
+            "t = (v − v₀)/a = 44/9 s ≈ 4,89 s.",
+            "Setze den exakten Wert für t in s = v₀t + ½at² ein. Das ergibt s ≈ 43,46 m."
+          ]
+        },
+        {
+          title: "Wo steht die Straßenbahn?",
+          imageAlt: "Eine Straßenbahn passiert eine Markierung am Gleis.",
+          scenario: "Eine Straßenbahn passiert eine Streckenmarke bei x₀ = 120 m mit 6 m/s. Von dort an beschleunigt sie 5 s lang gleichmäßig mit 0,8 m/s².",
+          question: "Bei welchem Ort x befindet sich die Bahn 5 s nach der Streckenmarke?",
+          unit: "m", expected: 160,
+          given: "x₀ = 120 m, v₀ = 6 m/s, a = 0,8 m/s², t = 5 s",
+          target: "Ort x nach 5 s",
+          conclusion: "Nach 5 s befindet sich die Straßenbahn bei x = 160 m.",
+          hint: "Gesucht ist der Ort auf der Strecke. Berücksichtige x₀, v₀ und den Term mit a.",
+          solution: [
+            "In 5 s beträgt die Verschiebung s = v₀t + ½at² = 30 m + 10 m = 40 m.",
+            "Der Ort ist x = x₀ + s = 120 m + 40 m = 160 m."
+          ]
+        }
+      ]
+    },
+    {
+      name: "Gleichungen verbinden",
+      artwork: "gleichungen-verbinden.webp",
+      tasks: [
+        {
+          title: "Beschleunigung ohne Stoppuhr",
+          imageAlt: "Ein kleiner Versuchswagen auf einer geraden Schiene im Labor.",
+          scenario: "Ein Versuchswagen startet aus dem Stand und beschleunigt gleichmäßig. Nach einer Strecke von 32 m beträgt seine Geschwindigkeit 12 m/s. Die Zeit wurde nicht gemessen.",
+          question: "Wie groß ist die Beschleunigung?",
+          unit: "m/s²", expected: 2.25,
+          given: "v₀ = 0 m/s, s = 32 m, v = 12 m/s",
+          target: "Beschleunigung a",
+          conclusion: "Der Versuchswagen beschleunigt mit 2,25 m/s².",
+          hint: "Stelle v = at nach t um. Setze den Ausdruck für t in s = ½at² ein. Das Einsetzen eines Ausdrucks nennt man Substitution.",
+          solution: [
+            "Aus v = at folgt t = v/a.",
+            "Setze t = v/a in s = ½at² ein. Es ergibt sich s = ½a(v/a)² = v²/(2a).",
+            "Stelle nach a um. a = v²/(2s) = (12 m/s)² / (2 · 32 m) = 2,25 m/s²."
+          ]
+        },
+        {
+          title: "Bremsdaten auf der Teststrecke",
+          imageAlt: "Ein Testwagen bremst auf einer mit Kegeln markierten Strecke.",
+          scenario: "Ein Testwagen bremst auf 70 m gleichmäßig von 90 km/h auf 36 km/h. Die Dauer der Bremsung ist unbekannt.",
+          question: "Welchen Wert hat die Beschleunigung a einschließlich Vorzeichen?",
+          unit: "m/s²", expected: -3.75,
+          given: "v₀ = 90 km/h, v = 36 km/h, s = 70 m",
+          target: "Beschleunigung a mit Vorzeichen",
+          conclusion: "Die Beschleunigung beträgt −3,75 m/s². Das Minus zeigt an, dass das Auto langsamer wird.",
+          hint: "Setze t = (v − v₀)/a in s = v₀t + ½at² ein. Bringe die beiden Terme auf den gemeinsamen Nenner 2a.",
+          solution: [
+            "Wandle um. v₀ = 25 m/s und v = 10 m/s.",
+            "Setze t = (v − v₀)/a in die Weggleichung ein. Es folgt s = [2v₀(v − v₀) + (v − v₀)²]/(2a).",
+            "Klammere (v − v₀) aus. Der Zähler wird zu (v − v₀)(v + v₀) = v² − v₀².",
+            "a = (v² − v₀²)/(2s) = [(10 m/s)² − (25 m/s)²] / (2 · 70 m) = −3,75 m/s²."
+          ]
+        },
+        {
+          title: "Vom Erkennen bis zum Anhalten",
+          imageAlt: "Ein Auto nähert sich einem Warnkegel auf einer geraden Landstraße.",
+          motion: "stop",
+          scenario: "Ein Autofahrer fährt mit 72 km/h, als er ein Hindernis sieht. Während seiner Reaktionszeit von 0,8 s bleibt das Tempo gleich. Dann bremst er mit a = −5 m/s² gleichmäßig bis zum Stillstand.",
+          question: "Wie lang ist der gesamte Anhalteweg ab dem Erkennen des Hindernisses?",
+          unit: "m", expected: 56,
+          given: "v₀ = 72 km/h, Reaktionszeit 0,8 s, a beim Bremsen −5 m/s², v am Ende 0 m/s",
+          target: "Gesamter Anhalteweg",
+          conclusion: "Vom Erkennen des Hindernisses bis zum Stillstand fährt das Auto 56 m.",
+          hint: "Rechne getrennt für Reaktionszeit und Bremszeit. Addiere dann beide Strecken.",
+          solution: [
+            "72 km/h entsprechen 20 m/s. Während der Reaktion gilt a = 0 und damit s = v₀t = 20 m/s · 0,8 s = 16 m.",
+            "Beim Bremsen sinkt v von 20 m/s auf 0. Die Bremszeit ist (0 − 20 m/s) / (−5 m/s²) = 4 s.",
+            "Bremsweg = 20 m/s · 4 s + ½ · (−5 m/s²) · (4 s)² = 40 m.",
+            "Anhalteweg = Reaktionsweg + Bremsweg = 16 m + 40 m = 56 m."
+          ]
+        }
+      ]
+    }
+  ];
+
+  const byId = (id) => document.getElementById(id);
+  const exercise = {
+    label: byId("task-label"),
+    title: byId("task-title"),
+    scenario: byId("scenario"),
+    question: byId("question"),
+    image: byId("task-image"),
+    tasks: byId("tasks"),
+    levels: byId("levels"),
+    input: byId("answer"),
+    unit: byId("answer-unit"),
+    feedback: byId("feedback"),
+    hintBox: byId("hint-box"),
+    hint: byId("hint"),
+    solutionBox: byId("solution-box"),
+    solution: byId("solution"),
+    solutionGiven: byId("solution-given"),
+    solutionTarget: byId("solution-target"),
+    solutionResult: byId("solution-result"),
+    previous: byId("previous"),
+    next: byId("next"),
+    progress: document.querySelector(".bar"),
+    progressText: byId("progress-text")
+  };
+
+  const motion = {
+    panel: byId("motion"),
+    button: byId("motion-play"),
+    buttonText: byId("motion-play").querySelector("span"),
+    markers: byId("motion-markers"),
+    vehicle: byId("motion-vehicle"),
+    caption: byId("motion-caption")
+  };
+  const motionModels = {
+    start: {
+      caption: "Die Punkte markieren gleiche Zeitabstände. Beim Anfahren werden die zurückgelegten Teilstrecken immer länger.",
+      distance: (t) => t ** 2
+    },
+    brake: {
+      caption: "Die Punkte markieren gleiche Zeitabstände. Beim Bremsen werden die Teilstrecken bis zum Stillstand immer kürzer.",
+      distance: (t) => 2 * t - t ** 2
+    },
+    stop: {
+      caption: "Das Auto fährt bis zum orangefarbenen Strich mit konstantem Tempo weiter. Erst danach beginnt die Bremsung.",
+      reactionDistance: 2 / 7,
+      distance(t) {
+        const reactionTime = 1 / 6;
+        if (t <= reactionTime) return this.reactionDistance * t / reactionTime;
+        const brakingTime = (t - reactionTime) / (1 - reactionTime);
+        return this.reactionDistance + (1 - this.reactionDistance) * (2 * brakingTime - brakingTime ** 2);
+      }
+    }
+  };
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  const trackX = (distance) => 16 + 248 * distance;
+  let model;
+  let motionFrame = null;
+
+  function placeVehicle(distance) {
+    motion.vehicle.setAttribute("transform", `translate(${trackX(distance)} 0)`);
+  }
+
+  function stopMotion() {
+    if (motionFrame !== null) cancelAnimationFrame(motionFrame);
+    motionFrame = null;
+    motion.buttonText.textContent = "Abspielen";
+  }
+
+  function showMotion(key) {
+    stopMotion();
+    model = motionModels[key];
+    motion.panel.hidden = !model;
+    if (!model) return;
+
+    placeVehicle(0);
+    motion.button.hidden = reduceMotion.matches;
+    motion.caption.textContent = model.caption;
+    motion.markers.replaceChildren();
+    for (let step = 0; step <= 4; step++) {
+      const marker = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      marker.setAttribute("cx", trackX(model.distance(step / 4)));
+      marker.setAttribute("cy", "23");
+      marker.setAttribute("r", "2.3");
+      motion.markers.append(marker);
+    }
+    if (model.reactionDistance !== undefined) {
+      const transition = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      transition.setAttribute("d", `M${trackX(model.reactionDistance)} 18v10`);
+      transition.setAttribute("stroke", "#a34921");
+      transition.setAttribute("stroke-width", "2");
+      motion.markers.append(transition);
+    }
+  }
+
+  motion.button.addEventListener("click", () => {
+    if (!model || reduceMotion.matches) return;
+    if (motionFrame !== null) {
+      stopMotion();
+      placeVehicle(0);
+      return;
+    }
+    const startedAt = performance.now();
+    motion.buttonText.textContent = "Stoppen";
+    placeVehicle(0);
+    function animate(now) {
+      const elapsed = Math.min(1, Math.max(0, (now - startedAt) / 3000));
+      placeVehicle(model.distance(elapsed));
+      if (elapsed < 1) motionFrame = requestAnimationFrame(animate);
+      else stopMotion();
+    }
+    motionFrame = requestAnimationFrame(animate);
+  });
+  reduceMotion.addEventListener("change", () => showMotion(allTasks[currentIndex].motion));
+
+  const allTasks = levels.flatMap((level, levelIndex) =>
+    level.tasks.map((task, taskIndex) => ({
+      ...task, levelIndex, taskIndex, key: `${levelIndex + 1}.${taskIndex + 1}`
+    }))
+  );
+  const storageKey = "bewegungslabor:solved:v1";
+  let solved = new Set();
+  try {
+    const saved = JSON.parse(localStorage.getItem(storageKey));
+    if (Array.isArray(saved)) {
+      solved = new Set(saved.filter((key) => allTasks.some((task) => task.key === key)));
+    }
+  } catch {
+    // Die Übungen funktionieren auch ohne Browserspeicher.
+  }
+
+  let currentIndex = 0;
+  const responses = new Map();
+
+  function updateProgress() {
+    exercise.progressText.textContent = `${solved.size} von ${allTasks.length} gelöst`;
+    exercise.progress.setAttribute("aria-valuenow", solved.size);
+    exercise.progress.firstElementChild.style.width = `${100 * solved.size / allTasks.length}%`;
+
+    const current = allTasks[currentIndex];
+    exercise.levels.querySelectorAll("button").forEach((button, index) => {
+      const count = allTasks.filter((task) => task.levelIndex === index && solved.has(task.key)).length;
+      button.setAttribute("aria-pressed", index === current.levelIndex);
+      button.querySelector(".level-count").textContent = `${count}/${levels[index].tasks.length}`;
+    });
+    exercise.tasks.querySelectorAll("button").forEach((button, index) => {
+      const task = allTasks[currentIndex - current.taskIndex + index];
+      const isSolved = solved.has(task.key);
+      button.textContent = `${index + 1}${isSolved ? " ✓" : ""}`;
+      button.classList.toggle("done", isSolved);
+      button.setAttribute("aria-label", `Aufgabe ${index + 1}${isSolved ? ", gelöst" : ""}`);
+    });
+  }
+
+  levels.forEach((level, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "level";
+    button.innerHTML = `<span class="level-number" aria-hidden="true">0${index + 1}</span><span class="level-name"></span><span class="level-count"></span>`;
+    button.querySelector(".level-name").textContent = level.name;
+    button.addEventListener("click", () => {
+      const firstUnsolved = allTasks.findIndex((task) => task.levelIndex === index && !solved.has(task.key));
+      const first = allTasks.findIndex((task) => task.levelIndex === index);
+      showTask(firstUnsolved === -1 ? first : firstUnsolved, true);
+    });
+    exercise.levels.append(button);
+  });
+
+  function setFeedback(message, correct) {
+    exercise.feedback.classList.toggle("correct", correct);
+    exercise.feedback.textContent = message;
+  }
+
+  function showTask(index, moveFocus = false) {
+    const task = allTasks[index];
+    if (!task) return;
+
+    responses.set(allTasks[currentIndex].key, exercise.input.value);
+    currentIndex = index;
+    exercise.label.textContent = `Stufe ${task.levelIndex + 1} · Aufgabe ${task.taskIndex + 1} von ${levels[task.levelIndex].tasks.length}`;
+    exercise.title.textContent = task.title;
+    exercise.scenario.textContent = task.scenario;
+    exercise.question.textContent = task.question;
+    exercise.image.alt = task.imageAlt;
+    exercise.image.dataset.panel = task.taskIndex;
+    const imageSource = `bilder/${levels[task.levelIndex].artwork}`;
+    if (exercise.image.getAttribute("src") !== imageSource) exercise.image.src = imageSource;
+    showMotion(task.motion);
+    exercise.unit.textContent = task.unit;
+    exercise.input.value = responses.get(task.key) ?? "";
+    exercise.input.removeAttribute("aria-invalid");
+    exercise.hintBox.open = false;
+    exercise.solutionBox.open = false;
+    exercise.hint.textContent = task.hint;
+    exercise.solutionGiven.textContent = task.given;
+    exercise.solutionTarget.textContent = task.target;
+    exercise.solutionResult.textContent = task.conclusion;
+    exercise.solution.replaceChildren(...task.solution.map((step) => {
+      const item = document.createElement("li");
+      item.textContent = step;
+      return item;
+    }));
+    setFeedback(solved.has(task.key) ? "Diese Aufgabe hast du bereits gelöst." : "", solved.has(task.key));
+
+    exercise.tasks.replaceChildren();
+    levels[task.levelIndex].tasks.forEach((_, taskIndex) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "task-tab";
+      if (taskIndex === task.taskIndex) button.setAttribute("aria-current", "step");
+      button.addEventListener("click", () => showTask(index - task.taskIndex + taskIndex, true));
+      exercise.tasks.append(button);
+    });
+    exercise.previous.disabled = index === 0;
+    exercise.next.disabled = index === allTasks.length - 1;
+    const nextTask = allTasks[index + 1];
+    exercise.next.querySelector("span").textContent =
+      nextTask && nextTask.levelIndex !== task.levelIndex ? "Nächste Stufe" : "Weiter";
+    updateProgress();
+    if (moveFocus) exercise.title.focus();
+  }
+
+  function parseAnswer(raw) {
+    const value = raw.trim().replace(/^−/, "-").replace(",", ".");
+    if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(value)) return NaN;
+    return Number(value);
+  }
+
+  byId("answer-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const value = parseAnswer(exercise.input.value);
+    const task = allTasks[currentIndex];
+
+    if (!Number.isFinite(value)) {
+      exercise.input.setAttribute("aria-invalid", "true");
+      setFeedback("Gib eine Zahl ein, zum Beispiel 7,5. Die Einheit steht neben dem Feld.", false);
+      return;
+    }
+    if (Math.abs(value - task.expected) > 0.005000001) {
+      exercise.input.setAttribute("aria-invalid", "true");
+      const oppositeSign = task.expected < 0 && value > 0 && Math.abs(value + task.expected) <= 0.005000001;
+      setFeedback(oppositeSign
+        ? "Der Betrag stimmt. Welches Vorzeichen hat a beim Bremsen in positiver Fahrtrichtung?"
+        : "Das Ergebnis stimmt noch nicht. Prüfe die Einheiten und nutze bei Bedarf den Tipp.", false);
+      return;
+    }
+
+    exercise.input.removeAttribute("aria-invalid");
+    solved.add(task.key);
+    try {
+      localStorage.setItem(storageKey, JSON.stringify([...solved]));
+    } catch {
+      // Der Fortschritt bleibt für die aktuelle Sitzung verfügbar.
+    }
+    updateProgress();
+    setFeedback(solved.size === allTasks.length
+      ? "Richtig! Du hast alle zwölf Aufgaben gelöst."
+      : "Richtig gerechnet!", true);
+  });
+
+  exercise.input.addEventListener("input", () => {
+    exercise.input.removeAttribute("aria-invalid");
+    setFeedback("", false);
+  });
+  exercise.previous.addEventListener("click", () => showTask(currentIndex - 1, true));
+  exercise.next.addEventListener("click", () => showTask(currentIndex + 1, true));
+  showTask(0);
+</script>
+</body>
+</html>

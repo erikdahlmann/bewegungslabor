@@ -8,4 +8,4 @@ mit Selbstkontrolle.
 - Der Bearbeitungsstand liegt im Browserspeicher (`localStorage`) des Geräts.
 - Die Seite läuft per Doppelklick oder über einen Webserver.
 
-Live: https://erikdahlmann.github.io/bewegungslabor/
+Live: https://dm-pkg.de/bewegungslabor/
